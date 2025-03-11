@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赛马游戏</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f0e6d7;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .players {
+            margin: 20px auto;
+        }
+        .player {
+            margin: 10px auto;
+        }
+        .horse-track {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+            width: 80%;
+            position: relative;
+            border: 2px solid #000;
+            padding: 10px;
+            background-color: #c2b280;
+            overflow: hidden;
+        }
+        .track {
+            width: 100%;
+            height: 60px;
+            border-bottom: 2px dashed #000;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .horse {
+            width: 50px;
+            height: 50px;
+            background-color: #ff6347;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .horse:nth-child(1) { background-color: #ff6347; }
+        .horse:nth-child(2) { background-color: #2e8b57; }
+        .horse:nth-child(3) { background-color: #4682b4; }
+        .horse:nth-child(4) { background-color: #800080; }
+        .buttons {
+            margin: 20px auto;
+        }
+        .buttons button {
+            margin: 0 10px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #ff0000;
+        }
+        .disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>赛马游戏</h1>
+        <div class="players" id="players">
+            <div class="player" id="player1">玩家1：10游戏币</div>
+            <div class="player" id="player2">玩家2：10游戏币</div>
+            <div class="player" id="player3">玩家3：10游戏币</div>
+            <div class="player" id="player4">你：10游戏币</div>
+        </div>
+        <div class="horse-track">
+            <div class="track" id="track1"><div class="horse" id="horse1">1</div></div>
+            <div class="track" id="track2"><div class="horse" id="horse2">2</div></div>
+            <div class="track" id="track3"><div class="horse" id="horse3">3</div></div>
+            <div class="track" id="track4"><div class="horse" id="horse4">4</div></div>
+        </div>
+        <div class="buttons">
+            <button onclick="placeBet(1)">下注马1</button>
+            <button onclick="placeBet(2)">下注马2</button>
+            <button onclick="placeBet(3)">下注马3</button>
+            <button onclick="placeBet(4)">下注马4</button>
+        </div>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const players = [
+            { id: 1, coins: 10, bet: 0, horse: null, name: "玩家1" },
+            { id: 2, coins: 10, bet: 0, horse: null, name: "玩家2" },
+            { id: 3, coins: 10, bet: 0, horse: null, name: "玩家3" },
+            { id: 4, coins: 10, bet: 0, horse: null, name: "你" } // 玩家4是用户
+        ];
+        let raceStarted = false;
+
+        function updatePlayers() {
+            players.forEach(player => {
+                const playerElement = document.getElementById(`player${player.id}`);
+                playerElement.innerText = `${player.name}：${player.coins}游戏币`;
+                if (player.bet > 0) {
+                    playerElement.innerText += `，下注马${player.horse}，${player.bet}游戏币`;
+                }
+            });
+        }
+
+        function placeBet(horseNumber) {
+            if (raceStarted || players[3].coins <= 0) return;
+            const betAmount = prompt(`你选择了马${horseNumber}，请输入你的赌注（你有${players[3].coins}个游戏币）：`, 1);
+            const amount = parseInt(betAmount);
+            if (isNaN(amount) || amount <= 0 || amount > players[3].coins) {
+                alert('无效的赌注，请重新输入！');
+                return;
+            }
+            players[3].coins -= amount;
+            players[3].bet = amount;
+            players[3].horse = horseNumber;
+            updatePlayers();
+            makeBets();
+        }
+
+        function makeBets() {
+            const availableHorses = [1, 2, 3, 4];
+            availableHorses.splice(availableHorses.indexOf(players[3].horse), 1);
+
+            players.forEach((player, index) => {
+                if (player.coins > 0 && player.id !== 4) {
+                    const randomHorse = availableHorses[Math.floor(Math.random() * availableHorses.length)];
+                    const randomBet = Math.floor(Math.random() * (player.coins + 1));
+                    player.bet = randomBet;
+                    player.horse = randomHorse;
+                    player.coins -= randomBet; // 扣除虚拟玩家的赌注
+                    availableHorses.splice(availableHorses.indexOf(randomHorse), 1);
+                    updatePlayers();
+                    setTimeout(500);
+                }
+            });
+
+            setTimeout(() => {
+                startRace();
+            }, 500);
+        }
+
+        function startRace() {
+            if (raceStarted) return;
+            raceStarted = true;
+            let countdown = 3;
+            const countdownInterval = setInterval(() => {
+                document.getElementById('result').innerText = `比赛即将开始，倒计时：${countdown}秒`;
+                countdown--;
+                if (countdown < 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('result').innerText = '';
+                    runRace();
+                }
+            }, 1000);
+        }
+
+        function runRace() {
+            const horses = document.querySelectorAll('.horse');
+            horses.forEach(horse => {
+                horse.style.left = '0';
+            });
+            const distances = [0, 0, 0, 0];
+            const maxDistance = document.querySelector('.horse-track').clientWidth - 60; // 减去终点前的空白
+            const interval = setInterval(() => {
+                for (let i = 0; i < 4; i++) {
+                    distances[i] += Math.random() * 20;
+                    if (distances[i] > maxDistance) {
+                        clearInterval(interval);
+                        raceStarted = false;
+                        const winner = i + 1;
+                        let totalBets = players.reduce((sum, player) => sum + player.bet, 0);
+                        players.forEach(player => {
+                            if (player.horse === winner) {
+                                player.coins += totalBets;
+                            }
+                            player.bet = 0;
+                            player.horse = null;
+                        });
+                        updatePlayers();
+                        document.getElementById('result').innerText = `马${winner}获胜！`;
+                        if (players[3].coins <= 0) {
+                            document.getElementById('result').innerText += '\n你破产了！';
+                            document.querySelector('.buttons').classList.add('disabled');
+                        }
+                        return;
+                    }
+                    horses[i].style.left = `${distances[i]}px`;
+                }
+            }, 50);
+        }
+
+        updatePlayers();
+    </script>
+</body>
+</html>

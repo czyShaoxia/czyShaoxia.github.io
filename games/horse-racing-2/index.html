@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="../../style.css">
+    <title>赛马游戏</title>
+</head>
+<body>
+    <ul>
+        <li><a class="active" href="../../index.html">主页</a></li>
+        <li><a href="../horse-racing/index.html">赌马1.0</a></li>
+        <li><a href="index.html">赌马2.0</a></li>
+    </ul>
+
+    <div class="container">
+        <h1>赛马游戏</h1>
+        
+        <div class="game-info">
+            <div class="player-info">
+                <h2>玩家信息</h2>
+                <div class="player-stats">
+                    <div class="player" id="player-you">
+                        <h3>你</h3>
+                        <p>金币: <span id="your-coins">100</span></p>
+                    </div>
+                    <div class="player" id="player-a">
+                        <h3>玩家A</h3>
+                        <p>金币: <span id="player-a-coins">100</span></p>
+                    </div>
+                    <div class="player" id="player-b">
+                        <h3>玩家B</h3>
+                        <p>金币: <span id="player-b-coins">100</span></p>
+                    </div>
+                    <div class="player" id="player-c">
+                        <h3>玩家C</h3>
+                        <p>金币: <span id="player-c-coins">100</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="betting-section">
+                <h2>下注区域</h2>
+                <div class="bet-form">
+                    <div class="form-group">
+                        <label for="horse-select">选择赛马:</label>
+                        <select id="horse-select">
+                            <option value="0">踏雪无痕 - 赛道1</option>
+                            <option value="1">风驰电掣 - 赛道2</option>
+                            <option value="2">龙腾四海 - 赛道3</option>
+                            <option value="3">云起龙骧 - 赛道4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bet-amount">下注金额:</label>
+                        <input type="number" id="bet-amount" min="1" max="100" value="10">
+                    </div>
+                    <button id="place-bet-btn">下注</button>
+                </div>
+                <div id="bet-info" class="bet-info">
+                    <h3>本轮下注信息</h3>
+                    <div id="bet-details"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="race-track">
+            <h2>赛马场</h2>
+            <div class="track-container">
+                <div class="track" id="track-1">
+                    <div class="horse" id="horse-1">🐎</div>
+                    <div class="finish-line"></div>
+                </div>
+                <div class="track" id="track-2">
+                    <div class="horse" id="horse-2">🏇</div>
+                    <div class="finish-line"></div>
+                </div>
+                <div class="track" id="track-3">
+                    <div class="horse" id="horse-3">🐴</div>
+                    <div class="finish-line"></div>
+                </div>
+                <div class="track" id="track-4">
+                    <div class="horse" id="horse-4">🦄</div>
+                    <div class="finish-line"></div>
+                </div>
+            </div>
+            <button id="start-race-btn" disabled>开始比赛</button>
+        </div>
+        
+        <div id="race-result" class="race-result hidden">
+            <h2>比赛结果</h2>
+            <p id="winner-text"></p>
+            <div id="result-details"></div>
+            <button id="next-race-btn">下一轮</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 

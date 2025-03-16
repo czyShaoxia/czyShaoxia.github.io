@@ -1,0 +1,241 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Microsoft YaHei', sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #8b4513;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #5a3921;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #deb887;
+    padding-bottom: 5px;
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
+.player-info, .betting-section {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+.player-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.player {
+    background-color: #f9f3e9;
+    padding: 10px;
+    border-radius: 5px;
+    border-left: 4px solid #deb887;
+}
+
+#player-you {
+    border-left-color: #4caf50;
+}
+
+#player-a {
+    border-left-color: #2196f3;
+}
+
+#player-b {
+    border-left-color: #ff9800;
+}
+
+#player-c {
+    border-left-color: #e91e63;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+select, input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #a0522d;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.bet-info {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #ddd;
+}
+
+.race-track {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.track-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+    position: relative;
+}
+
+.track {
+    height: 60px;
+    background-color: #f0e6d2;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #deb887;
+}
+
+.horse {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 30px;
+    transition: left 0.1s linear;
+    z-index: 2;
+    transform: translateY(-50%) scaleX(-1);
+}
+
+.finish-line {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+    background-color: #ff0000;
+    z-index: 1;
+}
+
+#track-1 {
+    background-color: #e8f5e9;
+}
+
+#track-2 {
+    background-color: #e3f2fd;
+}
+
+#track-3 {
+    background-color: #fff3e0;
+}
+
+#track-4 {
+    background-color: #fce4ec;
+}
+
+#start-race-btn {
+    margin-top: 20px;
+    padding: 12px 30px;
+    font-size: 18px;
+    background-color: #4caf50;
+}
+
+#start-race-btn:hover {
+    background-color: #45a049;
+}
+
+.race-result {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+#winner-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 15px 0;
+    color: #4caf50;
+}
+
+#result-details {
+    margin: 20px 0;
+    text-align: left;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+#next-race-btn {
+    background-color: #ff9800;
+    margin-top: 10px;
+}
+
+#next-race-btn:hover {
+    background-color: #f57c00;
+}
+
+@media (max-width: 768px) {
+    .game-info {
+        flex-direction: column;
+    }
+    
+    .player-stats {
+        grid-template-columns: 1fr;
+    }
+} 
